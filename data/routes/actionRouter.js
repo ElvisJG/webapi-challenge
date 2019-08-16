@@ -15,6 +15,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET /api/projects/{id}/actions
+router.get('/:id/actions', async (req, res) => {
+  try {
+    const project = await Project.getProjectActions(id);
+    res.status(200).json(project);
+  } catch (error) {
+    // log error
+    console.log(error);
+    res.status(500).json({ message: 'Error processing request' });
+  }
+});
+
 //
 router.post('', async (req, res) => {
   try {

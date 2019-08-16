@@ -15,20 +15,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/projects/{id}/actions
-router.get('/:id/actions', async (req, res) => {
-  try {
-    const project = await Project.getProjectActions(id);
-    res.status(200).json(project);
-  } catch (error) {
-    // log error
-    console.log(error);
-    res.status(500).json({ message: 'Error processing request' });
-  }
-});
-
-// POST
-router.post('/', async (req, res) => {
+// POST /api/projects
+router.post('/', validateEntry, async (req, res) => {
   try {
     const addProject = await Project.insert(req.body);
     res.status(200).json(addProject);
@@ -39,7 +27,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-//
+// PUT /api/projects/{id}
 router.put('/:id', async (req, res) => {
   try {
     const update = await Project.update(req.params.id, req.body);
@@ -51,7 +39,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-//
+// DELETE /api/projects/{id}
 router.delete('/:id', async (req, res) => {
   try {
     const destroy = await Project.remove(req.params.id);
@@ -62,5 +50,18 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ message: 'Error processing request' });
   }
 });
+
+// Validation
+function validateEntry(req, res, next) {
+  if (!req.body.name && !req.body.description) {
+    res.status(400).json({ message: 'missing body' });
+  } else if (!req.body.name) {
+    res.status(400).json({ message: 'missing required name field' });
+  } else if (!req.body.description) {
+    res.status(400).json({ message: 'missing required description field' });
+  } else {
+    next();
+  }
+}
 
 module.exports = router;
