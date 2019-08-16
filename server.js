@@ -1,8 +1,8 @@
 const express = require('express');
 const logger = require('morgan');
 
-const actionRouter = require('./data/routes/actionRouter');
-const projectRouter = require('./data/routes/projectRouter');
+const actionRouter = require('./data/routes/actionRouter.js');
+const projectRouter = require('./data/routes/projectRouter.js');
 
 const server = express();
 // Express.json is a method that returns a piece of middleware
