@@ -4,8 +4,10 @@ const Action = require('../helpers/actionModel.js');
 const router = express.Router();
 
 //
-router.get('', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
+    const actions = await Action.get();
+    res.status(200).json(actions);
   } catch (error) {
     // log error
     console.log(error);
