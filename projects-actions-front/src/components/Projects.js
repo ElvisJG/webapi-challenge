@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Project from './Project';
+
 export default props => {
   console.log(props);
   return (
@@ -9,9 +11,12 @@ export default props => {
         {props.projects.map(project => {
           return (
             <Link to={`/projects/${project.id}`} key={project.id}>
-              <h3>{project.id}</h3>
-              <h3>{project.description}</h3>
-              <h3>{project.notes}</h3>
+              <Project
+                name={project.name}
+                description={project.description}
+                status={project.completed}
+                id={project.id}
+              />
             </Link>
           );
         })}

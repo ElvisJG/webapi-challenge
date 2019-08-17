@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Action from './Action';
+
 export default props => {
   console.log(props);
   return (
@@ -9,9 +11,13 @@ export default props => {
         {props.actions.map(action => {
           return (
             <Link to={`/actions/${action.id}`} key={action.id}>
-              <h3>{action.id}</h3>
-              <h3>{action.description}</h3>
-              <h3>{action.notes}</h3>
+              <Action
+                description={action.description}
+                notes={action.notes}
+                status={action.completed}
+                id={action.id}
+                project_id={action.project_id}
+              />
             </Link>
           );
         })}
