@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 router.post('/', validateEntry, async (req, res) => {
   try {
     const addProject = await Project.insert(req.body);
-    res.status(200).json(addProject);
+    res.status(201).json(addProject);
   } catch (error) {
     // log error
     console.log(error);

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const Action = require('../helpers/actionModel.js');
+const Project = require('../helpers/projectModel.js');
 const router = express.Router();
 
 //
@@ -16,9 +17,9 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/projects/{id}/actions
-router.get('/:id/actions', async (req, res) => {
+router.get('/:id/projects', async (req, res) => {
   try {
-    const project = await Project.getProjectActions(id);
+    const project = await Project.getProjectActions(req.params.id);
     res.status(200).json(project);
   } catch (error) {
     // log error
@@ -28,8 +29,11 @@ router.get('/:id/actions', async (req, res) => {
 });
 
 //
-router.post('', async (req, res) => {
+router.post('/:id/projects', async (req, res) => {
   try {
+    const action = { ...req.body, project_id: req.params.id };
+    const addAction = await Action.insert(action);
+    res.status(201).json(addAction);
   } catch (error) {
     // log error
     console.log(error);
@@ -38,8 +42,10 @@ router.post('', async (req, res) => {
 });
 
 //
-router.put('', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
+    const update = await Action.update(req.params.id, req.body);
+    res.status(200).json(update);
   } catch (error) {
     // log error
     console.log(error);
@@ -48,8 +54,10 @@ router.put('', async (req, res) => {
 });
 
 //
-router.delete('', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
+    const destroy = await Action.remove(req.params.id);
+    res.status(200).json(destroy);
   } catch (error) {
     // log error
     console.log(error);
