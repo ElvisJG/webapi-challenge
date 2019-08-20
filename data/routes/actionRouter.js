@@ -45,7 +45,7 @@ router.post(
   }
 );
 
-//
+// PUT /api/actions/{id}
 router.put('/:id', [validateActions, validateProjectId], async (req, res) => {
   try {
     const update = await Action.update(req.params.id, req.body);
